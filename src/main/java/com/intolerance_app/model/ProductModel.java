@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,17 +17,14 @@ public class ProductModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "PRODUCT", columnDefinition = "TEXT", nullable = false)
-    private String herb;
-
     @Column(name = "NAME", length = 128)
-    private String latinName;
+    private String productName;
 
     @Column(name = "DESCRIPTION")
-    private String description;
+    private String productDescription;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductModel> userHerbs = new ArrayList<>();
+    private List<ProductModel> productModels = new ArrayList<>();
 
 }
 

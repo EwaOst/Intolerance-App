@@ -23,7 +23,8 @@ public class UserService {
     public Optional<UserModel> updateUser(Long id, UserModel updateUser) {
         return Optional.ofNullable(userRepository.findById(id)
                 .map(user -> {
-                    user.setUsername(updateUser.getUsername());
+                    user.setUserSurname(updateUser.getUserSurname());
+                    user.setUserSurname(updateUser.getUserSurname());
                     user.setEmail(updateUser.getEmail());
                     user.setPassword(updateUser.getPassword());
                     return userRepository.save(user);

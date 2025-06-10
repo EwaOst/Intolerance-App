@@ -4,7 +4,6 @@ import com.intolerance_app.model.UserModel;
 import com.intolerance_app.service.UserService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +29,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserModel> updateUser(@PathVariable Long id, @RequestBody UserModel user) {
+    public ResponseEntity<UserModel> updateUser(@PathVariable Long id,
+                                                @RequestBody UserModel user) {
         return userService.updateUser(id, user)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound()
@@ -43,7 +43,7 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserModel> getUserById (@PathVariable Long id) {
         return userService.getUserById(id)
                 .map(ResponseEntity::ok)
@@ -51,7 +51,7 @@ public class UserController {
                         .build());
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent()

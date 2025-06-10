@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -26,9 +28,13 @@ public class ProductModel {
     @Column(name = "HISTAMINE_LEVEL")
     private HistamineLevelEnum histamineLevelEnum;
 
-    @ManyToOne(optional = true)  // lub usuń nullable=false
-    @JoinColumn(name = "user_id", nullable = true) // nullable = true oznacza, że kolumna może być pusta
-    private UserModel user;
+    @ManyToMany
+    @JoinTable(
+            name = "product_intolerance",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "intolerance_id")
+    )
+    private Set<IntoleranceModel> intolerances;
 
 }
 

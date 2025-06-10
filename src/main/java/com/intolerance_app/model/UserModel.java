@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -32,7 +34,13 @@ public class UserModel {
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductModel> products = new ArrayList<>();
-
+    @ManyToMany
+    @JoinTable(
+            name = "user_intolerance",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "intolerance_id")
+    )
+    private Set<IntoleranceModel> intolerances = new HashSet<>();
 }
+
+

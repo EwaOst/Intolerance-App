@@ -27,7 +27,7 @@ class ProductServiceTest {
     private ProductService productService;
 
     private ProductModel createProductModel(Long id, String productName, String productDescription, HistamineLevelEnum histamineLevelEnum, UserModel user) {
-        return new ProductModel(id, productName, productDescription, histamineLevelEnum, user);
+        return new ProductModel(id, productName, productDescription, histamineLevelEnum, user.getIntolerances());
     }
 
     @Test

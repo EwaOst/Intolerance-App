@@ -4,9 +4,6 @@ package com.intolerance_app.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -40,7 +37,22 @@ public class UserModel {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "intolerance_id")
     )
-    private Set<IntoleranceModel> intolerances = new HashSet<>();
+    private Set<IntoleranceModel> intolerances;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserModel)) return false;
+        UserModel other = (UserModel) o;
+        return id != null && id.equals(other.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return id == null ? 0 : id.hashCode();
+
+    }
+
 }
 
 

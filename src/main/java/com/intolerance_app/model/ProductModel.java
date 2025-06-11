@@ -1,5 +1,7 @@
 package com.intolerance_app.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.intolerance_app.enums.HistamineLevelEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,6 +37,5 @@ public class ProductModel {
             inverseJoinColumns = @JoinColumn(name = "intolerance_id")
     )
     private Set<IntoleranceModel> intolerances;
-
 }
 

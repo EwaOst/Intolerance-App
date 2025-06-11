@@ -1,5 +1,7 @@
 package com.intolerance_app.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,12 +25,20 @@ public class IntoleranceModel {
     @Column(name = "DESCRIPTION")
     private String intoleranceDescription;
 
-    // Relacja z użytkownikami
     @ManyToMany(mappedBy = "intolerances")
+    @JsonIgnore
     private Set<UserModel> users;
 
-    // Relacja z produktami
-    @ManyToMany(mappedBy = "intolerances")
-    private Set<ProductModel> products;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof IntoleranceModel)) return false;
+        IntoleranceModel other = (IntoleranceModel) o;
+        return id != null && id.equals(other.getId());
+    }
 
+    @Override
+    public int hashCode() {
+        return id == null ? 0 : id.hashCode();
+    }
 }

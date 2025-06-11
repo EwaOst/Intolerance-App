@@ -1,5 +1,6 @@
 package com.intolerance_app.service;
 
+import com.intolerance_app.exception.IntoleranceNotFoundException;
 import com.intolerance_app.model.IntoleranceModel;
 import com.intolerance_app.repository.IntoleranceRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -18,6 +19,10 @@ public class IntoleranceService {
         this.intoleranceRepository = intoleranceRepository;
     }
 
+    public IntoleranceModel createIntolerance(IntoleranceModel intolerance) {
+        return intoleranceRepository.save(intolerance);
+    }
+
     public List<IntoleranceModel> getAllIntolerances() {
      return intoleranceRepository.findAll();
     }
@@ -29,5 +34,15 @@ public class IntoleranceService {
         } else {
             throw new EntityNotFoundException("Intolerance not found");
         }
+    }
+
+    public IntoleranceModel updateIntolerance(Long id, IntoleranceModel intolerance) {
+        IntoleranceModel existingIntolerance = intoleranceRepository.findById(id)
+                .orElseThrow(() -> new IntoleranceNotFoundException("Intolerance not found with id: " + id));
+
+        existingIntolerance.setIntoleranceName(intolerance.getIntoleranceName());
+        existingIntolerance.setIntoleranceDescription(intolerance.getIntoleranceDescription());
+
+        return intoleranceRepository.save((existingIntolerance));
     }
 }

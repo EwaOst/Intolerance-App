@@ -2,7 +2,7 @@ package com.intolerance_app.controller;
 
 import com.intolerance_app.model.ProductModel;
 import com.intolerance_app.service.ProductService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,7 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
-    private ProductService productService;
-
-    @Autowired
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
+    private final ProductService productService;
 
     @PostMapping
     public ResponseEntity<ProductModel> createProduct(@Valid @RequestBody ProductModel productModel) {
@@ -56,9 +51,14 @@ public class ProductController {
         return ResponseEntity.noContent()
                 .build();
     }
+    @GetMapping("/products")
+    public ResponseEntity<List<ProductModel>> getFilteredProducts(
+            @RequestParam(required = false) Boolean filterIntolerances,
+            @RequestParam(required = false) String histamineLevel,
+            @RequestParam Long userId) {
 
-
-
-
+        List<ProductModel> products = productService.getFilteredProducts(userId, filterIntolerances, histamineLevel);
+        return ResponseEntity.ok(products);
+    }
 
 }
